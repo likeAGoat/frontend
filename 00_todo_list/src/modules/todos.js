@@ -39,6 +39,7 @@ export default handleActions({
          * 이 액션이 어떤 데이터를 처리하는지 쉽게 볼 수 있도록 하는 작업입니다.
         */
        const { id, text, done } = action.payload;
+
        return state.push(Map({
          id,
          text,
@@ -50,7 +51,7 @@ export default handleActions({
         /**
          * 비구조 할당으로 index 레퍼런스에 action.payload 값을 넣습니다. 이 작업이 필수는 아니지만,
          * 나중에 이 코드를 보았을 때 여기서 payload가 어떤 값을 의미하는지 쉽게 이해 할 수 있습니다.
-         * 
+         *
          */
 
          //updateIn으로 현재 값을 참조하여 반대 값으로 설정합니다.
@@ -61,7 +62,10 @@ export default handleActions({
           */
     },
     [REMOVE]: (state,action) => {
-        const { payload: index } = action; // const index = action:payload;
+        const { payload: index } = action; // const index = action.payload;
+        console.log("index :" + action.payload);
+
+        //인덱스인 아이템을 제거한다.
         return state.delete(index);
     }
 }, initialState)
