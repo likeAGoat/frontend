@@ -20,7 +20,7 @@ class TodoInputContainer extends Component {
 
     handleChange = (e) => {
         const {value} = e.target;
-        const {InputActions} = this.props;
+        const {InputActions} = this.props; //this.props객체안에 있는 InputActions를 선언한다.
         InputActions.setInput(value);
     }
 
@@ -31,7 +31,10 @@ class TodoInputContainer extends Component {
             text: value,
             done: false
         };
-        TodosActions.insert(todo);
+        //input에 입력 텍스트가 있어야한다.
+        if(todo.text){
+            TodosActions.insert(todo);
+        }
         InputActions.setInput('');
     }
     render() {

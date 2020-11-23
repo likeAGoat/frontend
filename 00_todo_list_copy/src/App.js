@@ -1,21 +1,18 @@
 import React from "react";
 
-import { Route, Link, Switch } from "react-router-dom";// route 기능을 위한 패키지에서 Route 함수와 Link 함수, Switch함수만 골라서 참조
+// route 기능을 위한 패키지에서 Route 함수와 Link 함수, Switch함수만 골라서 참조
+import { Route, Link, Switch } from "react-router-dom";
 
-import TodoList from './pages/TodoList';
-import NewsListPage from './pages/NewsListPage';
-import Error404 from './pages/Error404';
-
-import styles from './assets/styles.scss';
+import TodoList from './components/PageTemplate/TodoList';
+import NewsList from './components/PageTemplate/NewsList';
+import Error404 from './components/PageTemplate/Error404';
 
 const App = () => {
     return (
         <div>
             {/* --- 페이지로 링크 적용 --- */}
-            <div className="nav-menu">
-                <Link className="nav-link" to="/">TodoList</Link>
-                <Link className="nav-link" to="/newsListPage">News</Link>
-            </div>
+            <Link to="/">[TodoList]</Link>
+            <Link to="/newsList">[News]</Link>
 
             {/* --- 페이지로 사용될 컴포넌트들 명시하기 --- */}
             <Switch>
@@ -23,9 +20,7 @@ const App = () => {
                 {/* 첫 페이지로 사용되는 컴포넌트는 path에 "/"를 권장 */}
                 <Route path="/" component={TodoList} exact={true} />
                 {/* 서브라우팅 사용 */}
-                {/* Path 파라미터로 카테고리 값을 받는 페이지 구성 */}
-                {/* ":변수이름?" 에서 물음표는 해당 변수가 선택적이라는 의미 */}
-                <Route path="/newsListPage/:category?" component={NewsListPage} />
+                <Route path="/newsList" component={NewsList} />
                 {/* path 속성 없이 Route 지정 -> 지정되지 않은 모든 요청에 반응. 단 switch블록의 맨 마지막에 배치해야함  */}
                 <Route component={Error404} />
             </Switch>

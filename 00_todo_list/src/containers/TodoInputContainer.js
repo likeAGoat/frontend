@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //액션 생성 함수들을 한꺼번에 불러옵니다.
-import * as inputActions from '../modules/input';
-import * as todosActions from '../modules/todos';
+import * as inputActions from '../reducers/input';
+import * as todosActions from '../reducers/todos';
 
 //액션
 class TodoInputContainer extends Component {

@@ -1,0 +1,22 @@
+.navbar{
+    &-list{
+        display: flex;
+        width: 990px;
+        box-sizing: border-box;
+        padding: 20px;
+        margin: 0 auto 20px;
+        list-style: none;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+    &-item{
+        margin-right: 10px;
+        a{
+            display: block;
+            font-size: 20px;
+            color: #000;
+            text-decoration: none;
+        }
+    }
+}

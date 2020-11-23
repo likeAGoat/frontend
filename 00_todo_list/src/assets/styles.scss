@@ -1,0 +1,19 @@
+.nav-menu{
+    margin-bottom: 20px;
+    padding: 15 20px;
+    background-color: #3f63bf;
+}
+.nav-link{
+    display: inline-block;
+    height: 45px;
+    line-height: 45px;
+    font-weight: bold;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 0 10px;
+    &::after{
+        margin-left: 10px;
+        content:'|';
+    }
+}

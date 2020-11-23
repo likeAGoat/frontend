@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 //액션 생성 함수들을 한꺼번에 불러옵니다.
-import * as todosActions from '../modules/todos';
+import * as todosActions from '../reducers/todos';
 
 
 class TodoListContainer extends Component {

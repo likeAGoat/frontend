@@ -65,7 +65,11 @@ export default handleActions({
         const { payload: index } = action; // const index = action.payload;
         console.log("index :" + action.payload);
 
+        // 참고
+        // const s = [1,3,5]; s.filter(v=>v.id !== 2); // 가 아닌 모든 배열 요소가 들어간다.
+        // const f = [1,2];
+
         //인덱스인 아이템을 제거한다.
-        return state.delete(index);
+        return state.delete(index);//힌트 주신거! immutable.js 기조에 맞춰서 immutable.js의 메서드 중 fillter를 이용해서 한다.
     }
 }, initialState)

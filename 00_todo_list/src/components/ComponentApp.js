@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PageTemplate from './PageTemplate';
-// import TodoInput from './TodoInput';
-// import TodoList from './TodoList';
+import PageTemplate from '../pages';
+
 import TodoInputContainer from '../containers/TodoInputContainer';
 import TodoListContainer from '../containers/TodoListContainer';
 

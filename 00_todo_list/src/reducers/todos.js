@@ -1,3 +1,4 @@
+import React from 'react';
 //todos모듈에서 구현할 액션
 //INSERT:추가, TOGGLE: 토글, REMOVE: 삭제
 // - 1) 액션 타입 정하기
@@ -39,6 +40,7 @@ export default handleActions({
          * 이 액션이 어떤 데이터를 처리하는지 쉽게 볼 수 있도록 하는 작업입니다.
         */
        const { id, text, done } = action.payload;
+        console.log('id : ' + id);
        return state.push(Map({
          id,
          text,
@@ -50,7 +52,7 @@ export default handleActions({
         /**
          * 비구조 할당으로 index 레퍼런스에 action.payload 값을 넣습니다. 이 작업이 필수는 아니지만,
          * 나중에 이 코드를 보았을 때 여기서 payload가 어떤 값을 의미하는지 쉽게 이해 할 수 있습니다.
-         * 
+         *
          */
 
          //updateIn으로 현재 값을 참조하여 반대 값으로 설정합니다.
@@ -61,7 +63,16 @@ export default handleActions({
           */
     },
     [REMOVE]: (state,action) => {
-        const { payload: index } = action; // const index = action:payload;
-        return state.delete(index);
+        const { payload: index } = action; // const index = action.payload;
+        console.log("index :" + index);
+
+        // 참고
+        // const s = [1,3,5]; s.filter(v=>v.id !== 2); // 가 아닌 모든 배열 요소가 들어간다.
+        // const f = [1,2];
+
+        //인덱스인 아이템을 제거한다.
+        // return state.delete(index);
+        //힌트 주신거! immutable.js 기조에 맞춰서 immutable.js의 메서드 중 filter를 이용해서 한다.
+        return state.filter(item => item.get('id') !== index);
     }
 }, initialState)
