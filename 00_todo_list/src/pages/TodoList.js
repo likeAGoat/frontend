@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import TodoInputContainer from '../containers/TodoInputContainer';
 import TodoListContainer from '../containers/TodoListContainer';

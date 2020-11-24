@@ -5,6 +5,11 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 class TodoItem extends Component {
+  //todos 배열을 실제로 업데이트하는 상황 -> TodoItem컴포넌트가 리렌더링되어야 하는 경우는 done값이 바뀔 때 뿐
+  //사용 가능한 상황
+  //1. 컴포넌트 배열이 렌더링되는 리스트 컴포넌트일 때
+  //2. 리스트 컴포넌트 내부에 있는 아이템 컴포넌트일 때
+  //3. 하위 컴포넌트의 개수가 많으며, 리렌더링되지 말아야 할 상황에서도 리렌더링이 진행될 때
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.done !== nextProps.done;
   }

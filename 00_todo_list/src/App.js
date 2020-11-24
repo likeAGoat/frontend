@@ -24,7 +24,7 @@ const App = () => {
                 <Route path="/" component={TodoList} exact={true} />
                 {/* 서브라우팅 사용 */}
                 {/* Path 파라미터로 카테고리 값을 받는 페이지 구성 */}
-                {/* ":변수이름?" 에서 물음표는 해당 변수가 선택적이라는 의미 */}
+                {/* ":변수이름?" 에서 물음표는 해당 변수가 선택적이라는 의미 ->라우팅시 :category같이 추가적인 정보가 필요한 경우 match이용*/}
                 <Route path="/newsListPage/:category?" component={NewsListPage} />
                 {/* path 속성 없이 Route 지정 -> 지정되지 않은 모든 요청에 반응. 단 switch블록의 맨 마지막에 배치해야함  */}
                 <Route component={Error404} />
