@@ -3,7 +3,8 @@ import TodoItem from '../TodoItem';
 
 class TodoList extends Component {
 
-  //shouldComponentUpdate!!! 공부하기
+  //props 또는 state를 변경했을 때, 리렌더링을 시작할지 여부를 지정하는 메서드입니다. 컴포넌트를 만들 때 이 메서드를 따로 생성하지 않으면 기본적으로 언제나 true값을 반환
+  //이 메서드가 false값을 반환한다면 업데이트 과정은 여기에서 중지됩니다.
   shouldComponentUpdate(nextProps, nextState) {
     return this.props.todos !== nextProps.todos;
   }

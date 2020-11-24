@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 const TodoList = () => {
     return (
         <div className={cx('page-template')}>
-            <h1>일정 관리</h1>
+            <h1>Todo List</h1>
             <div className={cx('content')}>
                 <TodoInputContainer/>
                 <TodoListContainer/>
