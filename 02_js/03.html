@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--
+        **Q3) ES6에 있는 flat 을 바닐라로 구현해 보세요. (사엽)**
+
+        (다차원 배열을 인자값에 따라 뎁스를 1차원으로 변환하는 구조)
+
+        const arr1 = [1, 2, [3, 4]];
+
+        arr1.flat();
+
+        result: [1, 2, 3, 4];
+    -->
+</head>
+<body>
+    <script>
+        //Array 객체에 배열 생성 함수를 추가하여 사용
+        Array.matrix = function (m, n, initial) {
+            var a, i, j, mat = [];
+            for (i = 0; i < m; i += 1) {
+                a = [];
+                for (j = 0; j < n; j += 1) {
+                    a[j] = initial;
+                }
+                mat[i] = a;
+            }
+            return mat;
+        };
+
+        // matrix('행', '열', '기본값')
+        var arr = Array.matrix(5, 2, 0);
+    </script>
+</body>
+</html>
