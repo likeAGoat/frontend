@@ -19,6 +19,73 @@
     -->
 </head>
 <body>
-    <script></script>
+    <script>
+        //Array1 forEach, push pop method 구현
+        var Array1 = function(){
+            this.top = -1;
+            this.bucket = [];
+        };
+
+        Array1.prototype.push = function(val){
+            this.val = val;
+            this.bucket[++this.top] = val;
+        };
+
+        Array1.prototype.pop = function(){
+            if(this.top < 0){
+                return -1;
+            }else{
+                let popValue = this.bucket[this.top];
+                //slice말고 vanilla js로 구현해보기
+                this.bucket = this.bucket.slice(0,this.top);
+                this.top--;
+                return popValue;
+            }
+        };
+
+        Array1.prototype.forEach = function(){
+            for (let i=0; i<this.bucket.length; i++) {
+                console.log(this.bucket[i]);
+            }
+        };
+
+        //Array2 filter, map method (Array2에서도 forEach, push, pop method가 사용 가능해야함)
+        //인사이드 : 184p
+        var Array2 = function(arg){
+        };
+
+        Array2.prototype.filter = function(arr,func){
+            const result = [];
+                //forEach와 push상속 받아야 함
+                for(let i = 0; i < arr.length; i++){
+                    func(arr[i]) && result.push(arr[i]);
+                }
+            return result;
+        };
+
+        Array2.prototype.map = function(arr,func){
+            const result = [];
+                //forEach와 push상속 받아야 함
+                for(let i = 0; i < arr.length; i++){
+                    result.push(func(arr[i]));
+                }
+            return result;
+        };
+
+        var array1 = new Array1();
+        Array2.prototype = array1;
+        var array2 = new Array2();
+
+        // function F(){};
+        // F.prototype = Array1.prototype;
+        // Array2.prototype = new F();
+        // Array2.prototype.constructor = Array2;
+        // Array2.super = Array1.prototype;
+        // var array2 = new Array2;
+
+        console.dir(array2.__proto__.push(104));
+        console.dir(array2.__proto__.pop());
+        console.log(array2.filter([1,2,3,4,5], element => element > 3));
+    </script>
 </body>
 </html>

@@ -18,21 +18,27 @@
 </head>
 <body>
     <script>
-        //Array 객체에 배열 생성 함수를 추가하여 사용
-        Array.matrix = function (m, n, initial) {
-            var a, i, j, mat = [];
-            for (i = 0; i < m; i += 1) {
-                a = [];
-                for (j = 0; j < n; j += 1) {
-                    a[j] = initial;
+        //재귀함수,클로저
+        var data = [[1,2],[3,4]];
+        var flat = function(arr){
+            var array = [];
+            console.log("--array start--")
+            console.log(array)
+            arr.forEach(function(value){
+                console.log("--value--");
+                console.log(value);
+                if(Array.isArray(value)){
+                    array = array.concat(flat(value));
+                }else{
+                    array.push(value);
                 }
-                mat[i] = a;
-            }
-            return mat;
-        };
-
-        // matrix('행', '열', '기본값')
-        var arr = Array.matrix(5, 2, 0);
+            });
+            console.log("--array end--")
+            console.log(array);
+            return array;
+        }
+        var result = flat(data);
+        console.log(result);
     </script>
 </body>
 </html>

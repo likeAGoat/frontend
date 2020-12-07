@@ -21,13 +21,7 @@
     </style>
 </head>
 <body>
-    <div class="image_ryan">
-        <img  src="https://via.placeholder.com/800x1200" alt="">
-        <span class="result"></span>
-    </div>
     <script type="text/javascript">
-        //생성자 함수로 공통된 부분 쓸 수 있도록 할 수도 있을 것 같다 ..??!!
-        //image가 늘어날 때 가변 대응, 지금은 window.innerWidth/window.innerHeight 값을 가지고 있어서 div영역으로 한정해서 임의의 div에서 노출되게 변경해야 하지 않을까?
         var imageCalculate = function(image){
             var imageWidth = image.naturalWidth;
             var imageHeight = image.naturalHeight;
@@ -38,25 +32,43 @@
             var result = document.querySelector('.result');
             if(imageWidth >= imageHeight){
                 imageWidth = screenWidth;
-                imageHeight = image.offsetHeight;
+                imageHeight = image.height;
                 image.style.width= imageWidth + 'px';
             }else{
                 imageHeight = screenHeight;
-                imageWidth = image.offsetWidth;
+                imageWidth = image.width;
                 image.style.height= imageHeight + 'px';
             }
             result.innerText = imageWidth + 'x' + imageHeight;
+            console.log(imageWidth + 'x' + imageHeight);
         }
 
-        var image = document.querySelector('.image_ryan img');
+        var addElement = function(image){
+            var imageBox = document.createElement('div');
+            var imageText = document.createElement('div');
+
+            imageBox.classList.add('image_box');
+            imageText.classList.add('result');
+            imageBox.appendChild(image);
+            imageBox.appendChild(imageText);
+
+            document.body.prepend(imageBox);
+        }
+
+        var img = new Image();
+        img.src = "https://via.placeholder.com/200x400";
+
+        // var img2 = new Image();
+        // img2.src = "https://via.placeholder.com/400x800";
 
         //로드 될 시
         window.addEventListener("load",function(){
-            imageCalculate(image);
+            addElement(img);
+            imageCalculate(img);
         })
         //브라우저 리사이즈 될 시
         window.addEventListener("resize",function(){
-            imageCalculate(image);
+            imageCalculate(img);
         });
     </script>
 </body>
