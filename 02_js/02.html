@@ -48,22 +48,20 @@
         });
 
         //Array2 filter, map method (Array2에서도 forEach, push, pop method가 사용 가능해야함)
-        //[D] 인사이드 : 184p에서 더 발전시킨 방법 185p,186p
+        //[참고] 인사이드 : 184p에서 더 발전시킨 방법 185p,186p
         var Array2 = function () {
             Array1.apply(this, null);
         }
-
+        //중간자  Array1과 Array2 사이에 중개자를 만든다.
         function F() { };
         F.prototype = Array1.prototype;
         Array2.prototype = new F();
         Array2.prototype.constructor = Array2;
-        //[D] super가 무엇인지?????
         Array2.super = Array1.prototype;
         var array2 = new Array2();
 
         Array2.method("filter", function (arr, func) {
             const result = [];
-            //[D]forEach와 push상속 받아야 함
             for (let i = 0; i < arr.length; i++) {
                 func(arr[i]) && result.push(arr[i]);
             }
@@ -72,7 +70,6 @@
 
         Array2.method("map", function (arr, func) {
             const result = [];
-            //forEach와 push상속 받아야 함
             for (let i = 0; i < arr.length; i++) {
                 result.push(func(arr[i]));
             }

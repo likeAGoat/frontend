@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,65 +12,108 @@
         임의의 이미지 - imageWidth, imageHeight
     -->
     <style>
-        body,div{
+        body,
+        div {
             margin: 0;
             padding: 0;
         }
-        .result{
-            position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);font-size: 20px;background-color: #000; color: #fff;
+        .image{
+            display: block;
+            margin: auto;
         }
     </style>
 </head>
-<body>
-    <script type="text/javascript">
-        var imageCalculate = function(image){
-            var imageWidth = image.naturalWidth;
-            var imageHeight = image.naturalHeight;
 
-            //브라우저 사이즈 값
-            var screenWidth = window.innerWidth;
-            var screenHeight = window.innerHeight;
-            var result = document.querySelector('.result');
-            if(imageWidth >= imageHeight){
-                imageWidth = screenWidth;
-                imageHeight = image.height;
-                image.style.width= imageWidth + 'px';
-            }else{
-                imageHeight = screenHeight;
-                imageWidth = image.width;
-                image.style.height= imageHeight + 'px';
-            }
-            result.innerText = imageWidth + 'x' + imageHeight;
-            console.log(imageWidth + 'x' + imageHeight);
+<body>
+    <script>
+        var ImageSize = function (src) {
+            //초기값 설정
+            this.image = null;
+
+            this.imageInitialWidth = null;
+            this.imageInitialHeight = null;
+            this.imageWidth = null;
+            this.imageHeight = null;
+
+            this.imageSrc = src;
         }
 
-        var addElement = function(image){
+        ImageSize.prototype.initail = function(width,height){
+            document.body.style.backgroundColor = "#000";
+            var imageClass = document.querySelector(".image");
+            if(width >= height){
+                imageClass.style.width = window.innerWidth + 'px';
+            }else{
+                imageClass.style.height = window.innerHeight + 'px';
+            }
+        }
+
+        ImageSize.prototype.set = function () {
+            var image = new Image();
+            image.src = this.imageSrc;
+
+            this.imageInitialWidth = image.width;
+            this.imageInitialHeight = image.height;
+
+            // 이미지 로딩 완료 시 실행되는 함수
+            image.onload = function (){
+                console.log(image.width +'/'+image.height);
+                this.imageInitialWidth = image.width;
+                this.imageInitialHeight = image.height;
+                ImageSize.prototype.initail(this.imageInitialWidth,this.imageInitialHeight);
+            }
+            return image;//image 반환
+        }
+
+        ImageSize.prototype.get = function(){
+            var imageClass = document.querySelector(".image");
+            if(this.imageInitialWidth >= this.imageInitialHeight){
+                imageClass.style.width = this.imageWidth + 'px';
+            }else{
+                imageClass.style.height = this.imageHeight + 'px';
+            }
+        }
+
+        //이미지 사이즈 계산
+        ImageSize.prototype.calculate = function(width,height){
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+            if(width >= height){
+                width = screenWidth;
+                this.imageWidth = width;
+            }else{
+                height = screenHeight;
+                this.imageHeight = height;
+            }
+        }
+        //태그 선언
+        ImageSize.prototype.addElement = function (image) {
             var imageBox = document.createElement('div');
             var imageText = document.createElement('div');
-
             imageBox.classList.add('image_box');
-            imageText.classList.add('result');
-            imageBox.appendChild(image);
+
             imageBox.appendChild(imageText);
+            imageBox.appendChild(image);
+            image.classList.add('image');
 
             document.body.prepend(imageBox);
         }
 
-        var img = new Image();
-        img.src = "https://via.placeholder.com/200x400";
-
-        // var img2 = new Image();
-        // img2.src = "https://via.placeholder.com/400x800";
+        var img = new ImageSize('https://via.placeholder.com/300x500');
 
         //로드 될 시
         window.addEventListener("load",function(){
-            addElement(img);
-            imageCalculate(img);
+            var imageTag = img.set();
+            img.addElement(imageTag);
+            img.calculate();
+            img.get();
         })
         //브라우저 리사이즈 될 시
-        window.addEventListener("resize",function(){
-            imageCalculate(img);
+        window.addEventListener("resize", function () {
+            img.set();
+            img.get();
         });
     </script>
 </body>
+
 </html>
