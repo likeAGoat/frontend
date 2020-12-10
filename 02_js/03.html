@@ -18,18 +18,19 @@
 </head>
 <body>
     <script>
-        //재귀함수,클로저
-        var data = [[1,2],[3,4]];
         var flat = function(arr){
+            //빈 배열 선언
             var array = [];
             console.log("--array start--")
             console.log(array)
             arr.forEach(function(value){
                 console.log("--value--");
                 console.log(value);
+                //받은 객체가 배열일 경우
                 if(Array.isArray(value)){
+                    //재귀함수로 flat()함수 호출 후 concat으로 연결한 새로운 배열 생성
                     array = array.concat(flat(value));
-                }else{
+                }else{//배열이 아닌 경우 array로 값을 push
                     array.push(value);
                 }
             });
@@ -37,8 +38,10 @@
             console.log(array);
             return array;
         }
+ 
+        var data = [[1,2],[3,4]];
         var result = flat(data);
-        console.log(result);
+        console.log(result); //[1,2,3,4]
     </script>
 </body>
 </html>

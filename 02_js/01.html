@@ -38,6 +38,7 @@
             this.imageSrc = src;
         }
 
+        //이미지 로딩시 초기값 선언
         ImageSize.prototype.initail = function(width,height){
             document.body.style.backgroundColor = "#000";
             var imageClass = document.querySelector(".image");
@@ -47,7 +48,7 @@
                 imageClass.style.height = window.innerHeight + 'px';
             }
         }
-
+        //이미지 객체 생성
         ImageSize.prototype.set = function () {
             var image = new Image();
             image.src = this.imageSrc;
@@ -65,7 +66,9 @@
             return image;//image 반환
         }
 
+        //이미지 정보 가져오기
         ImageSize.prototype.get = function(){
+            console.log("get");
             var imageClass = document.querySelector(".image");
             if(this.imageInitialWidth >= this.imageInitialHeight){
                 imageClass.style.width = this.imageWidth + 'px';
@@ -74,18 +77,6 @@
             }
         }
 
-        //이미지 사이즈 계산
-        ImageSize.prototype.calculate = function(width,height){
-            var screenWidth = window.innerWidth;
-            var screenHeight = window.innerHeight;
-            if(width >= height){
-                width = screenWidth;
-                this.imageWidth = width;
-            }else{
-                height = screenHeight;
-                this.imageHeight = height;
-            }
-        }
         //태그 선언
         ImageSize.prototype.addElement = function (image) {
             var imageBox = document.createElement('div');
@@ -99,15 +90,15 @@
             document.body.prepend(imageBox);
         }
 
-        var img = new ImageSize('https://via.placeholder.com/300x500');
+        var img = new ImageSize('https://via.placeholder.com/200x500');
 
         //로드 될 시
         window.addEventListener("load",function(){
             var imageTag = img.set();
             img.addElement(imageTag);
-            img.calculate();
             img.get();
         })
+
         //브라우저 리사이즈 될 시
         window.addEventListener("resize", function () {
             img.set();
