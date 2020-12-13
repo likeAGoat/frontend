@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,94 @@
         카운터에 있는 돈통에는 1000원, 500원, 100원, 10원 짜리가 무한히 나오는 돈통이 있습니다. 메뉴는 커피, 빵 이며 가격은 랜덤입니다. 구매금액 n 을 투입했을 때 거슬러 받는 돈을 표시하세요. (예: 1000원 10개, 500원 1개, 10원 3개 합은 xxxx 원입니다.), n 은 10만원 보다 같거나 작습니다. (호영)
     -->
 </head>
+
 <body>
-    <script></script>
+    <script>
+        var giveChange = function (money) {
+            var number = (Math.floor(Math.random() * 11) + 1); //커피,빵 랜덤 개수(1개 ~ 최대10개)
+            var coffee = (Math.floor(Math.random() * 601) + 300) * 10 * number;//커피 가격 3000 ~ 6000까지(10원 단위의 커피 가격)
+            console.log('커피값: ' + coffee);
+            var bread = (Math.floor(Math.random() * 10) + 6) * 500 * number;//빵 가격 : 3000원부터 8000까지 (500원 단위의 빵 가격)
+            console.log('빵값: ' + bread);
+
+            //구매 금액
+            var changeCoin = money - (coffee + bread);
+            var changeCoinString = changeCoin.toString();//number to string
+            var changeArray = changeCoinString.split("").map(Number);//배열로 변경 후 배열값들 type number로 변경
+            console.log('거스름돈: ' + changeCoin);
+
+            //2차원 배열에 값 넣기
+            function arrFill(row, col) {
+                //거스름돈의 10진수 단위 값 array 배열로 변경
+                var arrayIndex = [];
+                for (var i = 0; i < changeArray.length; i++) {
+                    arrayIndex[i] = i;
+                }
+                arrayIndex = arrayIndex.reverse();
+
+                //2차원 배열에 값 넣기 arr[2][j]: [[10진수 단위 값 array],[거스름돈 array]]
+                const arr = [];
+                for (let i = 0; i < row; i++) {
+                    const temp = [];
+                    for (let j = 0; j < col; j++) {
+                        //더 좋은 방법이 있을까요?
+                        if (i === 0) {
+                            temp.push(arrayIndex[j])
+                        } else if (i === 1) {
+                            temp.push(changeArray[j])
+                        }
+                    }
+                    arr.push(temp);
+                }
+                return arr;
+            }
+
+            //거스름돈 계산하기(예: 1000원 10개, 500원 1개, 10원 3개 합은 xxxx 원입니다.)
+            function calculateChange() {
+                var arr = arrFill(2, changeArray.length);
+                var result = [];
+                var sum = 0;
+                var str = '';
+                //for문을 이용한 2차원 배열 읽기
+                for (let i = 0; i < arr.length; i++) {
+                    for (let j = 0; j < arr[i].length; j++) {
+                        //1원 단위 일 때는 for문을 빠져나옴
+                        if(j === arr[i].length-1){
+                            break;
+                        }
+                        str += Math.pow(10, arr[0][j]) + "원 " + arr[1][j] + "개,";
+                        sum += Math.pow(10, arr[0][j]) * arr[1][j];
+                    }
+                    str = str +'합은 '+ sum +'입니다.';
+                    return str;
+                }
+            }
+
+            return {
+                //coin 변수는 getter만을 부여함으로써 읽기 전용 속성을 부여
+                get coin() {
+                    return calculateChange();// (예: 1000원 10개, 500원 1개, 10원 3개 합은 xxxx 원입니다.)
+                },
+                //메서드 calculate
+                //커피 가격이랑 빵 가격을 임의로 낮춰서 대량 구매 하면 안되니까 비공개 멤버로 외부에서의 접근 차단
+                calculate: function () {
+                    if (changeCoin > 100000) {
+                        alert("내가 가진 돈은 최대 10만원 뿐");
+                        return;
+                    }
+                    if (changeCoin < 0) {
+                        alert("상품 값이 부족합니다.");
+                        return;
+                    }
+                    console.log(me.coin);
+                }
+            }
+        };
+
+        var me = giveChange(100000);
+        me.calculate();
+
+    </script>
 </body>
+
 </html>

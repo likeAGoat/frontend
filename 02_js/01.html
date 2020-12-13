@@ -11,99 +11,52 @@
         임의의 화면 - screenWidth, screenHeight
         임의의 이미지 - imageWidth, imageHeight
     -->
-    <style>
-        body,
-        div {
-            margin: 0;
-            padding: 0;
-        }
-        .image{
-            display: block;
-            margin: auto;
-        }
-    </style>
 </head>
 
 <body>
     <script>
-        var ImageSize = function (src) {
-            //초기값 설정
-            this.image = null;
+        var ApplySize = function(screenWidth, screenHeight, imageWidth, imageHeight) {
+            //임의의 사각형영역과 임의의 사각형 이미지 닮은비 이용
+            var ratio = Math.min(screenWidth / imageWidth, screenHeight / imageHeight);
+            console.log("ratio : " + ratio);
 
-            this.imageInitialWidth = null;
-            this.imageInitialHeight = null;
-            this.imageWidth = null;
-            this.imageHeight = null;
-
-            this.imageSrc = src;
-        }
-
-        //이미지 로딩시 초기값 선언
-        ImageSize.prototype.initail = function(width,height){
-            document.body.style.backgroundColor = "#000";
-            var imageClass = document.querySelector(".image");
-            if(width >= height){
-                imageClass.style.width = window.innerWidth + 'px';
-            }else{
-                imageClass.style.height = window.innerHeight + 'px';
+            //임의의 사각형 이미지 width/height 비율이 더 큰 경우: width값 비교
+            if (imageWidth / imageHeight > screenWidth / screenHeight) {
+                //임의의 사각형 이미지의 가로값 > 임의의 사각형 영역 가로값
+                if(imageWidth > screenWidth){
+                    this.scaledWidth = Math.min(imageWidth, screenWidth);
+                }else{
+                    this.scaledWidth = Math.max(imageWidth, screenWidth);
+                }
+                this.scaledHeight = imageHeight * ratio;
             }
-        }
-        //이미지 객체 생성
-        ImageSize.prototype.set = function () {
-            var image = new Image();
-            image.src = this.imageSrc;
-
-            this.imageInitialWidth = image.width;
-            this.imageInitialHeight = image.height;
-
-            // 이미지 로딩 완료 시 실행되는 함수
-            image.onload = function (){
-                console.log(image.width +'/'+image.height);
-                this.imageInitialWidth = image.width;
-                this.imageInitialHeight = image.height;
-                ImageSize.prototype.initail(this.imageInitialWidth,this.imageInitialHeight);
-            }
-            return image;//image 반환
-        }
-
-        //이미지 정보 가져오기
-        ImageSize.prototype.get = function(){
-            console.log("get");
-            var imageClass = document.querySelector(".image");
-            if(this.imageInitialWidth >= this.imageInitialHeight){
-                imageClass.style.width = this.imageWidth + 'px';
-            }else{
-                imageClass.style.height = this.imageHeight + 'px';
+            else {//임의의 사각형 이미지 width/height 비율이 더 큰 경우: height값 비교
+                //임의의 사각형 이미지의 높이값 > 임의의 사각형 영역 높이값
+                if(imageHeight > screenHeight){
+                    this.scaledHeight = Math.min(imageHeight, screenHeight);
+                }else{
+                    this.scaledHeight = Math.max(imageHeight, screenHeight);
+                }
+                this.scaledWidth =  imageWidth * ratio;
             }
         }
 
-        //태그 선언
-        ImageSize.prototype.addElement = function (image) {
-            var imageBox = document.createElement('div');
-            var imageText = document.createElement('div');
-            imageBox.classList.add('image_box');
-
-            imageBox.appendChild(imageText);
-            imageBox.appendChild(image);
-            image.classList.add('image');
-
-            document.body.prepend(imageBox);
+        ApplySize.prototype.getSize = function(){
+            return "이미지 가로 최대값은 : " + this.scaledWidth + " 이미지 세로 최대값 : " + this.scaledHeight;
         }
 
-        var img = new ImageSize('https://via.placeholder.com/200x500');
+        var imageMaxSize = new ApplySize(200, 100, 10, 40);
+        console.log(imageMaxSize.getSize());//이미지 가로 최대값은 : 25 이미지 세로 최대값 : 100
 
-        //로드 될 시
-        window.addEventListener("load",function(){
-            var imageTag = img.set();
-            img.addElement(imageTag);
-            img.get();
-        })
+        var imageMaxSize2 = new ApplySize(300, 80, 200, 40);
+        console.log(imageMaxSize2.getSize());//이미지 가로 최대값은 : 300 이미지 세로 최대값 : 60
 
-        //브라우저 리사이즈 될 시
-        window.addEventListener("resize", function () {
-            img.set();
-            img.get();
-        });
+        var imageMaxSize3 = new ApplySize(100, 100, 250, 250);
+        console.log(imageMaxSize3.getSize());//이미지 가로 최대값은 : 100 이미지 세로 최대값 : 100
+
+        var imageMaxSize4 = new ApplySize(180, 200, 550, 50);
+        console.log(imageMaxSize4.getSize());//이미지 가로 최대값은 : 180 이미지 세로 최대값 : 16.363636363636363
+
     </script>
 </body>
 
