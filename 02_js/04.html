@@ -14,13 +14,13 @@
 <body>
     <script>
         var giveChange = function (money) {
+            //커피 가격이랑 빵 가격을 임의로 낮춰서 대량 구매 하면 안되니까 비공개 멤버로 외부에서의 접근 차단
             var number = (Math.floor(Math.random() * 11) + 1); //커피,빵 랜덤 개수(1개 ~ 최대10개)
             var coffee = (Math.floor(Math.random() * 601) + 300) * 10 * number;//커피 가격 3000 ~ 6000까지(10원 단위의 커피 가격)
-            console.log('커피값: ' + coffee);
             var bread = (Math.floor(Math.random() * 10) + 6) * 500 * number;//빵 가격 : 3000원부터 8000까지 (500원 단위의 빵 가격)
-            console.log('빵값: ' + bread);
+            console.log('커피값: ' + coffee +' 빵값: ' + bread);
 
-            //구매 금액
+            //거스름돈
             var changeCoin = money - (coffee + bread);
             var changeCoinString = changeCoin.toString();//number to string
             var changeArray = changeCoinString.split("").map(Number);//배열로 변경 후 배열값들 type number로 변경
@@ -40,7 +40,7 @@
                 for (let i = 0; i < row; i++) {
                     const temp = [];
                     for (let j = 0; j < col; j++) {
-                        //더 좋은 방법이 있을까요?
+                        //[D]더 간결한 방법 찾아보기
                         if (i === 0) {
                             temp.push(arrayIndex[j])
                         } else if (i === 1) {
@@ -49,13 +49,13 @@
                     }
                     arr.push(temp);
                 }
+                // console.log(arr);
                 return arr;
             }
 
             //거스름돈 계산하기(예: 1000원 10개, 500원 1개, 10원 3개 합은 xxxx 원입니다.)
             function calculateChange() {
                 var arr = arrFill(2, changeArray.length);
-                var result = [];
                 var sum = 0;
                 var str = '';
                 //for문을 이용한 2차원 배열 읽기
@@ -78,8 +78,6 @@
                 get coin() {
                     return calculateChange();// (예: 1000원 10개, 500원 1개, 10원 3개 합은 xxxx 원입니다.)
                 },
-                //메서드 calculate
-                //커피 가격이랑 빵 가격을 임의로 낮춰서 대량 구매 하면 안되니까 비공개 멤버로 외부에서의 접근 차단
                 calculate: function () {
                     if (changeCoin > 100000) {
                         alert("내가 가진 돈은 최대 10만원 뿐");
