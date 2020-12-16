@@ -15,9 +15,9 @@
 
 <body>
     <script>
-        var ApplySize = function(screenWidth, screenHeight, imageWidth, imageHeight) {
+        const ApplySize = function(screenWidth, screenHeight, imageWidth, imageHeight) {
             //임의의 사각형영역과 임의의 사각형 이미지 닮은비 이용
-            var ratio = Math.min(screenWidth / imageWidth, screenHeight / imageHeight);
+            const ratio = Math.min(screenWidth / imageWidth, screenHeight / imageHeight);
             console.log("ratio : " + ratio);
 
             //임의의 사각형 이미지 width/height 비율이 더 큰 경우: width값 비교
@@ -45,16 +45,16 @@
             return "이미지 가로 최대값은 : " + this.scaledWidth + " 이미지 세로 최대값 : " + this.scaledHeight;
         }
 
-        var imageMaxSize = new ApplySize(200, 100, 10, 40);
+        const imageMaxSize = new ApplySize(200, 100, 10, 40);
         console.log(imageMaxSize.getSize());//이미지 가로 최대값은 : 25 이미지 세로 최대값 : 100
 
-        var imageMaxSize2 = new ApplySize(300, 80, 200, 40);
+        const imageMaxSize2 = new ApplySize(300, 80, 200, 40);
         console.log(imageMaxSize2.getSize());//이미지 가로 최대값은 : 300 이미지 세로 최대값 : 60
 
-        var imageMaxSize3 = new ApplySize(100, 100, 250, 250);
+        const imageMaxSize3 = new ApplySize(100, 100, 250, 250);
         console.log(imageMaxSize3.getSize());//이미지 가로 최대값은 : 100 이미지 세로 최대값 : 100
 
-        var imageMaxSize4 = new ApplySize(180, 200, 550, 50);
+        const imageMaxSize4 = new ApplySize(180, 200, 550, 50);
         console.log(imageMaxSize4.getSize());//이미지 가로 최대값은 : 180 이미지 세로 최대값 : 16.363636363636363
 
     </script>

@@ -21,7 +21,7 @@
 <body>
     <script>
         //Array1 forEach, push pop method 구현
-        var Array1 = function () {
+        const Array1 = function () {
             this.top = -1;
             this.bucket = [];
         }
@@ -50,7 +50,7 @@
 
         //Array2 filter, map method (Array2에서도 forEach, push, pop method가 사용 가능해야함)
         //[참고] 인사이드 : 184p : 부모 클래스 Array1의 생성자 호출
-        var Array2 = function () {
+        const Array2 = function () {
             Array1.apply(this, null);
         }
         //중간자 F() 생성 : Array1과 Array2 사이에 중개자를 만든다.
@@ -59,7 +59,7 @@
         Array2.prototype = new F();
         Array2.prototype.constructor = Array2;
         Array2.super = Array1.prototype;
-        var array2 = new Array2();
+        const array2 = new Array2();
 
         //filter 메서드 생성
         Array2.method("filter", function (arr, func) {

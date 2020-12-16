@@ -18,9 +18,9 @@
 </head>
 <body>
     <script>
-        var flat = function(arr){
+        const flat = function(arr){
             //빈 배열 선언
-            var array = [];
+            let array = [];
             console.log("--array start--")
             console.log(array)
             arr.forEach(function(value){
@@ -38,9 +38,9 @@
             console.log(array);
             return array;
         }
- 
-        var data = [[1,2],[3,4]];
-        var result = flat(data);
+
+        const data = [[1,2],[3,4]];
+        const result = flat(data);
         console.log(result); //[1,2,3,4]
     </script>
 </body>
