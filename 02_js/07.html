@@ -37,7 +37,6 @@
                 set: function (value) {
                     _color = value;
                     this._color = Object.entries(trafficLight).find(function (item) {
-                        // console.log(item);
                         return item[1] === _color;
                     })[0];
                 }
@@ -52,16 +51,15 @@
 
         function buttonColor(e) {
             const arr = [];
+            let i = 0;
             //이벤트가 발행한 .btn의 text를 가져와서 대입
             let color = this.textContent;
-            let i = 0;
 
             //클릭 이벤트가 발생한 .btn의 index를 구함
             const index = getElementIndex(document.querySelectorAll('.wrap .btn'), event.target)
 
             let number = index / 3;//index 값을 3으로 나누면 나머지가 나온다. 총 n번째 .container의 n을 구하기 위함
             number = Math.floor(number) - 1; // -1,0,1부터 시작하여 number에 넣어준다.
-            // console.log(number);
 
             const interval = setInterval(function () {
                 //신호등의 색을 변경해 준다. 순서 : R->Y->G

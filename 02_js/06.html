@@ -31,15 +31,15 @@
         const todoList = document.querySelector('.todoList');
         this.index = 0;
 
+        //itemList에 클릭 이벤트를 걸어준다.
         itemList.addEventListener('click', schedule.bind(null, event));
+
         function schedule() {
             const target = event.target;
             if (target.className === 'button') {
-                //추가 버튼 눌렀을 때
+                //추가 버튼 눌렀을 때 todoList Dom에 추가
                 const name = document.getElementById('item0').value;
-                console.log(name);
                 this.index++;
-                // this.index += 1; <- 왜 이렇게 하면 NAN이 나오는거지 ???
 
                 const result =
                 `<li class="">
@@ -48,29 +48,31 @@
                     <button type="button" class="button delete">삭제</button>
                     <button type="button" class="button add">수정</button>
                 </li>`;
-                console.log('가나');
+
                 todoList.innerHTML += result;
                 itemList.after(todoList);
             }
         }
 
-        console.log(this.index);
-
+        //todoList가 있다면 클릭 시 이벤트를 걸어준다.
         if (todoList) {
             todoList.addEventListener('click', scheduleList.bind(null, event))
         }
+
         function scheduleList() {
             const target = event.target;
+            //target이 되는 버튼이 delete클래스를 가지고 있으면 삭제 버튼역할
             if (hasClass(target, 'delete')) {
                 //Dom 삭제
                 target.closest('li').remove();
-            } else if (hasClass(target, 'add')) {
-                console.log(this); //this값을 못가져오고있다.
+            } else if (hasClass(target, 'add')) {//target이 되는 버튼이 add클래스를 가지고 있으면 삭제 버튼역할
                 const testName = 'item' + this.index;
                 const name = document.getElementById(testName).value;
                 target.closest('li').childNodes[1].innerHTML = name;
             }
         }
+
+        //클래스의 포함 유무를 확인하는 함수
         function hasClass(element, className) {
             return element.classList.contains(className);
         }
