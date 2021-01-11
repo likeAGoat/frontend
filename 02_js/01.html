@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--
+        ### Q1) 화면(임의의 크기의 사각형 영역)안에 임의의 이미지가 비율을 유지한채 최대의 크기로 이미지가 보여질 수 있는 이미지의 크기를 구하시오. (주용)
+        [주어진 변수]
+        임의의 화면 - screenWidth, screenHeight
+        임의의 이미지 - imageWidth, imageHeight
+    -->
+</head>
+
+<body>
+    <script>
+        const ApplySize = function(screenWidth, screenHeight, imageWidth, imageHeight) {
+            //임의의 사각형영역과 임의의 사각형 이미지 닮은비 이용
+            const ratio = Math.min(screenWidth / imageWidth, screenHeight / imageHeight);
+            console.log("ratio : " + ratio);
+
+            //임의의 사각형 이미지 width/height 비율이 더 큰 경우: width값 비교
+            if (imageWidth / imageHeight > screenWidth / screenHeight) {
+                //임의의 사각형 이미지의 가로값 > 임의의 사각형 영역 가로값
+                if(imageWidth > screenWidth){
+                    this.scaledWidth = Math.min(imageWidth, screenWidth);
+                }else{
+                    this.scaledWidth = Math.max(imageWidth, screenWidth);
+                }
+                this.scaledHeight = imageHeight * ratio;
+            }
+            else {//임의의 사각형 이미지 width/height 비율이 더 큰 경우: height값 비교
+                //임의의 사각형 이미지의 높이값 > 임의의 사각형 영역 높이값
+                if(imageHeight > screenHeight){
+                    this.scaledHeight = Math.min(imageHeight, screenHeight);
+                }else{
+                    this.scaledHeight = Math.max(imageHeight, screenHeight);
+                }
+                this.scaledWidth =  imageWidth * ratio;
+            }
+        }
+
+        ApplySize.prototype.getSize = function(){
+            return "이미지 가로 최대값은 : " + this.scaledWidth + " 이미지 세로 최대값 : " + this.scaledHeight;
+        }
+
+        const imageMaxSize = new ApplySize(200, 100, 10, 40);
+        console.log(imageMaxSize.getSize());//이미지 가로 최대값은 : 25 이미지 세로 최대값 : 100
+
+        const imageMaxSize2 = new ApplySize(300, 80, 200, 40);
+        console.log(imageMaxSize2.getSize());//이미지 가로 최대값은 : 300 이미지 세로 최대값 : 60
+
+        const imageMaxSize3 = new ApplySize(100, 100, 250, 250);
+        console.log(imageMaxSize3.getSize());//이미지 가로 최대값은 : 100 이미지 세로 최대값 : 100
+
+        const imageMaxSize4 = new ApplySize(180, 200, 550, 50);
+        console.log(imageMaxSize4.getSize());//이미지 가로 최대값은 : 180 이미지 세로 최대값 : 16.363636363636363
+
+    </script>
+</body>
+
+</html>

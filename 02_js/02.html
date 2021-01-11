@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--
+        **Q2) 구현 Array1 Array2**
+
+        **Array1 forEach, push pop method 구현**
+
+        **Array2 filter, map method**
+
+        **Array2는 Array1을 상속받는다.**
+
+        - **Array2에서도 forEach, push, pop method가 사용 가능해야함 (상연)**
+
+        (위 형태로 기본 자바스크립트로만 구현하는부분입니다. 자바스크립트 prototype chain 이랑 배열 반복 메소드 구현 해보면 지난번 인덱싱 문제 같은 부분 해결할때도 좋을 것 같습니다.)
+    -->
+</head>
+<body>
+    <script>
+        //Array1 forEach, push pop method 구현
+        const Array1 = function () {
+            this.top = -1;
+            this.bucket = [];
+        }
+
+        //메서드 함수
+        Function.prototype.method = function (name, func) {
+            this.prototype[name] = func;
+        }
+        //push 메서드 생성
+        Array1.method("push", function (val) {
+            this.val = val;
+            this.bucket[++this.top] = val;
+        });
+        //pop 메서드 생성
+        Array1.method("pop", function () {
+            if (this.top < 0) {
+                return -1;
+            } else {
+                let popValue = this.bucket[this.top];
+                //slice말고 vanilla js로 구현해보기
+                this.bucket = this.bucket.slice(0, this.top);
+                this.top--;
+                return popValue;
+            }
+        });
+
+        //Array2 filter, map method (Array2에서도 forEach, push, pop method가 사용 가능해야함)
+        //[참고] 인사이드 : 184p : 부모 클래스 Array1의 생성자 호출
+        const Array2 = function () {
+            Array1.apply(this, null);
+        }
+        //중간자 F() 생성 : Array1과 Array2 사이에 중개자를 만든다.
+        function F() { };
+        F.prototype = Array1.prototype;
+        Array2.prototype = new F();
+        Array2.prototype.constructor = Array2;
+        Array2.super = Array1.prototype;
+        const array2 = new Array2();
+
+        //filter 메서드 생성
+        Array2.method("filter", function (arr, func) {
+            const result = [];
+            for (let i = 0; i < arr.length; i++) {
+                func(arr[i]) && result.push(arr[i]);
+            }
+            return result;
+        });
+        //map 메서드 생성
+        Array2.method("map", function (arr, func) {
+            const result = [];
+            for (let i = 0; i < arr.length; i++) {
+                result.push(func(arr[i]));
+            }
+            return result;
+        })
+
+        array2.push(111);
+        array2.push(10);
+
+        console.group("pop");
+        console.dir(array2.pop());//10
+        console.dir(array2.pop());//111
+        console.groupEnd();
+
+        console.log("filter");
+        console.log(array2.filter([1, 2, 3, 4, 5], element => element > 3)); //[4,5]
+        console.log("map");
+        console.log(array2.map([10, 30, 50], element => element + 2)) //[12, 32, 52]
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--
+        Q1)(호영)
+        민희님은 3년 뒤 퇴사를 하려합니다. 퇴사 날 전까지 동료들과 인사와 식사등으로 시간을 소진하며 최대한 많은 코드를 짜려고합니다.다음은 퇴사일까지 주어진 동료들과의 인사 시간과 각 해당일에 짤수 있는 코드 라인의 수입니다.퇴사전까지 짤수 있는 최대의 코드라인수를 구하세요.
+
+        기준: N=7 (일주일 뒤를 의미, 예를 들어 1월 1일 부터 1월 7일까지)
+
+        입력: 각 일별 (동료들과의 인사 시간, 짤 수 있는 코드 라인수)=(3, 10)(5, 20)(1,10)(1,20)(2,15),(4,40),(2,200)
+
+        단위: 시간(일), 라인(줄)
+
+        규칙: 첫날 (3,10) 은 동료들과의 인사에 3일을 소진할 예정이며 그럴 경우 10 줄의 코드를 짤수 있습니다. 대신 둘째날(20줄)과 셋째날(10줄) 코드를 짤 수 없습니다. 3일을 사용했기 때문입니다.
+    -->
+    <script>
+
+    const CodeWrite = function (...days) {
+        const N = days.length;
+        let goodbyeTime = 0;
+        let codeline = 0;
+        const arr = [];
+        for (let i = 0; i < N; i++) {
+            //goodbyeTime(동료들과 인사 시간)과 동일한 i번째 배열을 찾는다.
+            if (i === goodbyeTime) {
+                const arrayTime = days[i][0];//i번째의 '동료들과 인사 시간' 대입
+                const arrayCode = days[i][1];//i번째의 '짤 수 있는 코드 라인수' 대입
+                //마지막 배열 값일 경우, 마지막 i번째의 '동료들과 인사 시간'이 1일 일 때
+                if (i === N - 1 && arrayTime === 1) {
+                    //"짤수 있는 코드 라인수" 더해줌
+                    goodbyeTime += arrayTime;
+                    codeline += arrayCode;
+                    break;
+                }
+                //마지막 배열 값일 경우, 마지막 i번째의 '동료들과 인사 시간'이 1일 일 때 종료
+                if(i === N - 1 && arrayTime !== 1){
+                    break;
+                }
+                //i번째의 '동료들과 인사 시간' N(남은 퇴사 기간)보다 클때는 예외처리
+                if(arrayTime > N){
+                    throw new Error('입력한 값인 동료들과의 인사 시간이 남은 퇴사일보다 깁니다.');
+                }
+                goodbyeTime += arrayTime;
+                codeline += arrayCode;
+            }
+        }
+        console.log('동료들과의 인사 시간 : ' + goodbyeTime + ', 짤 수 있는 코드 라인수 : ' + codeline);
+    }
+
+    try{
+        const greet = new CodeWrite([1, 10],[1, 20],[1,10],[1,20],[2,15],[4,40],[1,200]);
+    } catch(e){
+        console.log(e);
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--
+        **Q3) ES6에 있는 flat 을 바닐라로 구현해 보세요. (사엽)**
+
+        (다차원 배열을 인자값에 따라 뎁스를 1차원으로 변환하는 구조)
+
+        const arr1 = [1, 2, [3, 4]];
+
+        arr1.flat();
+
+        result: [1, 2, 3, 4];
+    -->
+</head>
+<body>
+    <script>
+        const flat = function(arr){
+            //빈 배열 선언
+            let array = [];
+            console.log("--array start--")
+            console.log(array)
+            arr.forEach(function(value){
+                console.log("--value--");
+                console.log(value);
+                //받은 객체가 배열일 경우
+                if(Array.isArray(value)){
+                    //재귀함수로 flat()함수 호출 후 concat으로 연결한 새로운 배열 생성
+                    array = array.concat(flat(value));
+                }else{//배열이 아닌 경우 array로 값을 push
+                    array.push(value);
+                }
+            });
+            console.log("--array end--")
+            console.log(array);
+            return array;
+        }
+
+        const data = [[1,2],[3,4]];
+        const result = flat(data);
+        console.log(result); //[1,2,3,4]
+    </script>
+</body>
+</html>

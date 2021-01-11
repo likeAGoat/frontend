@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!--
+        Q2)(상연)
+
+        이벤트 바인딩 문제입니다.
+        일정 목록을 추가 할 수 있는 input box가 존재합니다. input에 일정을 기입하여 추가 하게 되는 경우 일정이 추가됩니다. 추가된 일정은 삭제 및 변경 버튼으로 조작이 가능합니다.
+
+        - 해당 문제를 구현시 이벤트 바인딩은 딱 두번만 가능합니다.
+            - (addEventListener 두번만 사용가능)
+        - 쉽게 구현하신 경우 목록 이동 기능도 구현하면 좋을 것 같습니다.
+    -->
+    <h3>일정 리스트 만들기</h3>
+    <ul class="itemList">
+        <li>
+            <input type="text" id="item0" class="input">
+            <button type="button" class="button">추가</button>
+        </li>
+    </ul>
+    <ul class="todoList"></ul>
+    <script>
+        const itemList = document.querySelector('.itemList');
+        const todoList = document.querySelector('.todoList');
+        this.index = 0;
+
+        //itemList에 클릭 이벤트를 걸어준다.
+        itemList.addEventListener('click', schedule.bind(null, event));
+
+        function schedule() {
+            const target = event.target;
+            if (target.className === 'button') {
+                //추가 버튼 눌렀을 때 todoList Dom에 추가
+                const name = document.getElementById('item0').value;
+                this.index++;
+
+                const result =
+                `<li class="">
+                    <h4>${name}</h4>
+                    <input type="text" id="item${this.index}" class="input">
+                    <button type="button" class="button delete">삭제</button>
+                    <button type="button" class="button add">수정</button>
+                </li>`;
+
+                todoList.innerHTML += result;
+                itemList.after(todoList);
+            }
+        }
+
+        //todoList가 있다면 클릭 시 이벤트를 걸어준다.
+        if (todoList) {
+            todoList.addEventListener('click', scheduleList.bind(null, event))
+        }
+
+        function scheduleList() {
+            const target = event.target;
+            //target이 되는 버튼이 delete클래스를 가지고 있으면 삭제 버튼역할
+            if (hasClass(target, 'delete')) {
+                //Dom 삭제
+                target.closest('li').remove();
+            } else if (hasClass(target, 'add')) {//target이 되는 버튼이 add클래스를 가지고 있으면 삭제 버튼역할
+                const testName = 'item' + this.index;
+                const name = document.getElementById(testName).value;
+                target.closest('li').childNodes[1].innerHTML = name;
+            }
+        }
+
+        //클래스의 포함 유무를 확인하는 함수
+        function hasClass(element, className) {
+            return element.classList.contains(className);
+        }
+    </script>
+</body>
+
+</html>
