@@ -29,34 +29,37 @@
     <script>
         const itemList = document.querySelector('.itemList');
         const todoList = document.querySelector('.todoList');
-        this.index = 0;
+        let index = 0;
 
         //itemList에 클릭 이벤트를 걸어준다.
-        itemList.addEventListener('click', schedule.bind(null, event));
+        itemList.addEventListener('click', schedule);
 
         function schedule() {
             const target = event.target;
             if (target.className === 'button') {
                 //추가 버튼 눌렀을 때 todoList Dom에 추가
                 const name = document.getElementById('item0').value;
-                this.index++;
+                index++;
 
                 const result =
-                `<li class="">
+                `<li class="todoItem" draggable="true">
                     <h4>${name}</h4>
-                    <input type="text" id="item${this.index}" class="input">
+                    <input type="text" id="item${index}" class="input">
                     <button type="button" class="button delete">삭제</button>
                     <button type="button" class="button add">수정</button>
                 </li>`;
 
-                todoList.innerHTML += result;
+                todoList.insertAdjacentHTML('beforeend',result);
                 itemList.after(todoList);
             }
         }
 
         //todoList가 있다면 클릭 시 이벤트를 걸어준다.
         if (todoList) {
-            todoList.addEventListener('click', scheduleList.bind(null, event))
+            todoList.addEventListener('click', scheduleList);
+            todoList.addEventListener('drag', setDragging);
+            todoList.addEventListener('dragover', setDraggedOver);
+            todoList.addEventListener('drop', compare);
         }
 
         function scheduleList() {
@@ -66,7 +69,7 @@
                 //Dom 삭제
                 target.closest('li').remove();
             } else if (hasClass(target, 'add')) {//target이 되는 버튼이 add클래스를 가지고 있으면 삭제 버튼역할
-                const testName = 'item' + this.index;
+                const testName = 'item' + index;
                 const name = document.getElementById(testName).value;
                 target.closest('li').childNodes[1].innerHTML = name;
             }
@@ -76,6 +79,32 @@
         function hasClass(element, className) {
             return element.classList.contains(className);
         }
+        //drag 이벤트 listener 호출
+        function setDragging(event){
+            if(event.target.className === "todoItem"){
+                dragging = event.target;
+                console.log(dragging);
+            }
+        }
+        //event.preventDefault();하여 drop이벤트가 호출 될 수 있도록 한다.
+        function setDraggedOver(event) {
+            event.preventDefault();
+            if(event.target.className === "todoItem"){
+                draggedOver = event.target;
+                console.log(draggedOver);
+            }
+        }
+
+        function compare(){
+            const parent = dragging.parentNode;
+            const sibling = dragging.nextSibling === draggedOver ? dragging : dragging.nextSibling;
+
+            // dragging의 위치를 draggedOver전에 위치
+            draggedOver.parentNode.insertBefore(dragging, draggedOver);
+
+            // draggedOver의 위치를 dragging의 sibling전에 위치
+            parent.insertBefore(draggedOver, sibling);
+        };
     </script>
 </body>
 
