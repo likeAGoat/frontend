@@ -38,12 +38,12 @@
             const target = event.target;
             if (target.className === 'button') {
                 //추가 버튼 눌렀을 때 todoList Dom에 추가
-                const name = document.getElementById('item0').value;
+                const input = document.getElementById('item0');
+                const title = input.value;
                 index++;
-
                 const result =
                 `<li class="todoItem" draggable="true">
-                    <h4>${name}</h4>
+                    <h4>${title}</h4>
                     <input type="text" id="item${index}" class="input">
                     <button type="button" class="button delete">삭제</button>
                     <button type="button" class="button add">수정</button>
@@ -51,6 +51,7 @@
 
                 todoList.insertAdjacentHTML('beforeend',result);
                 itemList.after(todoList);
+                input.value = '';
             }
         }
 
@@ -59,7 +60,7 @@
             todoList.addEventListener('click', scheduleList);
             todoList.addEventListener('drag', setDragging);
             todoList.addEventListener('dragover', setDraggedOver);
-            todoList.addEventListener('drop', compare);
+            todoList.addEventListener('drop', swap);
         }
 
         function scheduleList() {
@@ -69,9 +70,9 @@
                 //Dom 삭제
                 target.closest('li').remove();
             } else if (hasClass(target, 'add')) {//target이 되는 버튼이 add클래스를 가지고 있으면 삭제 버튼역할
-                const testName = 'item' + index;
-                const name = document.getElementById(testName).value;
-                target.closest('li').childNodes[1].innerHTML = name;
+                const titleName = target.closest('li').children[1].id;
+                const name = document.getElementById(titleName).value;
+                target.closest('li').children[0].textContent = name;
             }
         }
 
@@ -83,7 +84,6 @@
         function setDragging(event){
             if(event.target.className === "todoItem"){
                 dragging = event.target;
-                console.log(dragging);
             }
         }
         //event.preventDefault();하여 drop이벤트가 호출 될 수 있도록 한다.
@@ -91,11 +91,10 @@
             event.preventDefault();
             if(event.target.className === "todoItem"){
                 draggedOver = event.target;
-                console.log(draggedOver);
             }
         }
-
-        function compare(){
+        //nodelist 드래그하여 위치 변경
+        function swap(){
             const parent = dragging.parentNode;
             const sibling = dragging.nextSibling === draggedOver ? dragging : dragging.nextSibling;
 
@@ -104,7 +103,7 @@
 
             // draggedOver의 위치를 dragging의 sibling전에 위치
             parent.insertBefore(draggedOver, sibling);
-        };
+        }
     </script>
 </body>
 
