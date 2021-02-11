@@ -20,44 +20,104 @@
 
         규칙: 첫날 (3,10) 은 동료들과의 인사에 3일을 소진할 예정이며 그럴 경우 10 줄의 코드를 짤수 있습니다. 대신 둘째날(20줄)과 셋째날(10줄) 코드를 짤 수 없습니다. 3일을 사용했기 때문입니다.
     -->
+    <div class="test" id="test">
+        <label for="input_code">다음 형식으로 [동료들과의 인사 시간, 짤 수 있는 코드 라인수] 입력하세요.(예 : 1,10)</label><br>
+        <input type="text" id="input_code" placeholder="ex)1,1" title="(예 : 1,10)">
+        <button type="button">입력</button>
+        <button type="button">계산하기</button>
+        <button type="button">초기화</button>
+    </div>
+    <h4>입력한 값</h4>
+    <div id="input_value"></div>
+    <h4>퇴사 전까지 짤수 있는 최대의 코드라인 수</h4>
+    <div id="result_value"></div>
     <script>
 
-    const CodeWrite = function (...days) {
+    const test = document.getElementById('test');
+    const inputCode = document.getElementById('input_code');
+    const inputValue = document.getElementById('input_value');
+    const resultValue = document.getElementById('result_value');
+
+    const CodeWrite = function (days) {
         const N = days.length;
         let goodbyeTime = 0;
         let codeline = 0;
+        let arrayTime = 0;
+        let arrayCode = 0;
         const arr = [];
+
         for (let i = 0; i < N; i++) {
-            //goodbyeTime(동료들과 인사 시간)과 동일한 i번째 배열을 찾는다.
-            if (i === goodbyeTime) {
-                const arrayTime = days[i][0];//i번째의 '동료들과 인사 시간' 대입
-                const arrayCode = days[i][1];//i번째의 '짤 수 있는 코드 라인수' 대입
-                //마지막 배열 값일 경우, 마지막 i번째의 '동료들과 인사 시간'이 1일 일 때
-                if (i === N - 1 && arrayTime === 1) {
-                    //"짤수 있는 코드 라인수" 더해줌
-                    goodbyeTime += arrayTime;
-                    codeline += arrayCode;
-                    break;
-                }
-                //마지막 배열 값일 경우, 마지막 i번째의 '동료들과 인사 시간'이 1일 일 때 종료
-                if(i === N - 1 && arrayTime !== 1){
-                    break;
-                }
-                //i번째의 '동료들과 인사 시간' N(남은 퇴사 기간)보다 클때는 예외처리
-                if(arrayTime > N){
-                    throw new Error('입력한 값인 동료들과의 인사 시간이 남은 퇴사일보다 깁니다.');
-                }
+            //남은 동료들과의 인사 시간
+            const remainingTime = N - i;
+            arrayTime = days[i][0];//i번째의 '동료들과 인사 시간' 대입
+            arrayCode = days[i][1];//i번째의 '짤 수 있는 코드 라인수' 대입
+            //goodbyeTime(동료들과 인사 시간)과 동일한 i번째 배열을 찾는다. i번째의 '동료들과 인사 시간'는 remainingTime(남은 동료들과의 인사 시간)보다 작아야 한다.
+            if (i === goodbyeTime && arrayTime <= remainingTime) {
                 goodbyeTime += arrayTime;
                 codeline += arrayCode;
             }
+            //i번째의 '동료들과 인사 시간'는 remainingTime(남은 동료들과의 인사 시간)동일할 경우 반환
+            if(i === goodbyeTime && arrayTime === remainingTime){
+                break;
+            }
+            //i번째의 '동료들과 인사 시간' N(남은 퇴사 기간)보다 크거나, 남은 동료들과의 인사시간(remainingTime)보다 클 때 처리
+            if(arrayTime > N || arrayTime > remainingTime){
+                try{
+                    throw new Error(`${i+1}번째 입력한 값인 동료들과의 인사 시간이 남은 퇴사일보다 깁니다.`);
+                    break;
+                }catch(e){
+                    console.log(e);
+                }
+            }
         }
-        console.log('동료들과의 인사 시간 : ' + goodbyeTime + ', 짤 수 있는 코드 라인수 : ' + codeline);
+        resultValue.innerText = `동료들과의 인사 시간 : ${goodbyeTime},\n 짤 수 있는 코드 라인수 : ${codeline}`;
     }
 
-    try{
-        const greet = new CodeWrite([1, 10],[1, 20],[1,10],[1,20],[2,15],[4,40],[1,200]);
-    } catch(e){
-        console.log(e);
+    //이벤트 관련 처리
+    test.addEventListener('click', dataAdd);
+    inputCode.addEventListener('keydown', dataAdd);
+    let arr2 = [];
+
+    //input에 입력한 값들 배열로 변환
+    function  dataAdd () {
+        const target = event.target;
+        let data = document.getElementById('input_code');
+
+        var regExp = /^([0-9]*),([0-9]*)$/;
+
+        //"입력" 버튼 및 enter 눌렀을 때
+        if ((target.innerText === '입력' || event.keyCode == 13) && data.value) {
+            //입력값 공백을 없애준다.
+            const dataStandard = data.value.replace(/ /g,"");
+            //input 정규식을 통한 유효성 체크
+            if(!regExp.test(dataStandard)){
+                alert('입력값 형식이 올바르지 않습니다.');
+            }else{
+                //','단위로 잘르고 number로 형변환 해준다.
+                const dataArr = dataStandard.split(',').map(numStr => parseInt(numStr));
+                inputValue.innerText += dataArr + '\n';
+                arr2.push(dataArr);
+                data.value = '';
+            }
+        }
+
+        if(target.innerText == '초기화'){
+            init();
+            arr2 = [];
+        }
+
+        if(target.innerText === '계산하기' && arr2.length != 0){
+            const greet = new CodeWrite(arr2);
+        }else if(target.innerText === '계산하기' && arr2.length === 0){//arr2의 배열이 빈 값일 때
+            alert('입력한 값이 없습니다.');
+        }
+    }
+
+    //DOM요소 값 초기화
+    const init = function(){
+        inputCode.value = "";
+        inputValue.innerText = "";
+        resultValue.innerText = "";
     }
     </script>
 </body>
