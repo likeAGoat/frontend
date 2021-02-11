@@ -71,7 +71,9 @@ fetch("https://jsonplaceholder.typicode.com/posts/1").then((response) =>
 
 응답 객체를 통해 응답 상태가 `200 OK`인 것을 금방 알 수 있습니다.
 
-`Response {status: 200, ok: true, redirected: false, type: "cors", url: "https://jsonplaceholder.typicode.com/posts/1", …}`
+```jsx
+Response {status: 200, ok: true, redirected: false, type: "cors", url: "https://jsonplaceholder.typicode.com/posts/1", …}
+```
 
 대부분의 REST API들은 JSON 형태의 데이터를 응답하기 때문에, 응답(response) 객체는 `json()` 메서드를 제공합니다.
 
