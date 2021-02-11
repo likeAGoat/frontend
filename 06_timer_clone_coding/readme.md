@@ -67,7 +67,8 @@ fetch(url, options)
 ```jsx
 fetch("https://jsonplaceholder.typicode.com/posts/1").then((response) =>
   console.log(response)
-)```
+)
+```
 
 응답 객체를 통해 응답 상태가 `200 OK`인 것을 금방 알 수 있습니다.
 
