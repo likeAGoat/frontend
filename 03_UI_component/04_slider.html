@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @charset "UTF-8";
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-size: 11px;
+            color: #000;
+        }
+
+        .title {
+            font-size: 30px;
+            margin: 5px 0 0 30px;
+        }
+
+        a,
+        a:visited {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        #imageSlider1 {
+            margin-left: 50px;
+            margin-top: 50px;
+            width: 920px;
+        }
+
+        .image-slider {
+            position: relative;
+            left: 0px;
+            top: 0px;
+            width: 910px;
+            height: 360px;
+
+        }
+
+        .image-slider .slider-body {
+            position: relative;
+            width: 780px;
+            height: 340px;
+
+            margin: 10px auto;
+            background: url("./images/panelbg.png") no-repeat;
+
+        }
+
+        .image-slider .slider-body .image-list {
+            position: relative;
+            left: 10px;
+            top: 10px;
+            width: 760px;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .image-slider .slider-body .image-list img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.0;
+        }
+
+
+        /* image-list 끝  */
+
+        .image-slider .slider-body ul.index-nav {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 200px;
+            height: 30px;
+            list-style: none;
+        }
+
+        .image-slider .slider-body ul.index-nav li {
+            display: inline;
+            width: 35px;
+            height: 27px;
+            float: left;
+        }
+
+        .image-slider .slider-body ul.index-nav li a {
+            float: left;
+            font-size: 14pt;
+            width: 29px;
+            height: 27px;
+            line-height: 27px;
+            text-align: center;
+            vertical-align: middle;
+            background: url(./images/button_dot.png) no-repeat;
+        }
+
+        .image-slider .slider-body ul.index-nav li a.select {
+            background: url(./images/button_dot.png) no-repeat 0 -27px;
+        }
+
+        /* dot-nav   */
+        .image-slider .btn-prev {
+            position: absolute;
+            top: 150px;
+            left: 0px;
+            width: 51px;
+            height: 66px;
+            cursor: pointer;
+        }
+
+        .image-slider .btn-next {
+            position: absolute;
+            top: 150px;
+            right: 0px;
+            width: 51px;
+            height: 66px;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="image-slider" id="imageSlider1">
+        <div class="slider-body">
+            <div class="image-list">
+                <img src="./images/banner01.png">
+                <img src="./images/banner02.png">
+                <img src="./images/banner03.png">
+                <img src="./images/banner04.png">
+                <img src="./images/banner05.png">
+            </div>
+
+            <ul class="index-nav">
+                <li><a href="#" alt="1">1</a></li>
+                <li><a href="#" alt="2">2</a></li>
+                <li><a href="#" alt="3">3</a></li>
+                <li><a href="#" alt="4">4</a></li>
+                <li><a href="#" alt="4">5</a></li>
+            </ul>
+
+        </div>
+        <div class="btn-prev"><img src="./images/btn_prev.png"></div>
+        <div class="btn-next"><img src="./images/btn_next.png"></div>
+
+    </div>
+    <script type="text/javascript" src="04_slider.js"></script>
+    <script>
+        /*
+         * 
+         * step #08
+         * 		- jQuery 플러그인 만들기
+         *
+         * 		step #08-02
+         * 			- 외부 선택 기능을 플러그인으로 만들기
+         *
+         * 		step #08-01
+         * 			- imageSlider 플러그인 만들기
+         *
+         * step #07
+         * 		- 캡슐화 적용하기
+         *
+         * step #06
+         * 		- 이미지 전환 옵션 처리
+         * 		step #06-02
+         *			- 미미지 전환 옵션 적용
+         *
+         * 		step #06-01
+         * 			- 이미지 전환 옵션 만들기
+         *
+         *
+         * step #05
+         * 		- 이미지 자동 전환 기능 구현
+         *
+         * step #04
+         * 		- 이미지 변경 이벤트 발생
+         *
+         * step #03
+         * 		-  도트 메뉴  처리
+         * 		step #03-02
+         * 			- 도트 메뉴 아이템 선택 처리
+         *
+         * 		step #03-01
+         * 			- 이전, 다음 이미지 보이기 처리시 도트 메뉴 연동
+         *
+         *
+         * step #02
+         * 		- 이전 다음 버튼 처리
+         *
+         * 		step #02-03
+         * 			- 출력효과 애니메이션 추가
+         *
+         * 		step #02-02
+         * 			- 이전, 다음 버튼 클릭시 해당 이미지 활성화
+         *
+         * 		step #02-01
+         * 			- 이미지 요소 상태 초기화
+         *
+         * step #01
+         * 		- 레이아웃 만들기
+         *
+         *
+         */
+        window.onload = function () {
+            const imageSlider = new ImageSlider('.image-slider');
+        }
+    </script>
+</body>
+
+</html>

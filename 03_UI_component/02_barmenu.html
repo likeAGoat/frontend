@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-size: 9pt;
+
+        }
+
+        #barMenu1 {
+            position: relative;
+
+            left: 100px;
+            top: 100px;
+            width: 700px;
+        }
+
+        .bar-menu {
+            position: relative;
+            height: 78px;
+            /* 30px(height) + 0px(margin)+20px(10*2 padding) + 8px(4*2 border height) 10px(bar height)*/
+            border: 7px solid #eee;
+            cursor: pointer;
+        }
+
+        .bar-menu ul.menu-body {
+            position: relative;
+            list-style: none;
+            margin-top: 10px;
+            height: 100%;
+        }
+
+        .bar-menu ul.menu-body li {
+            height: 30px;
+            padding: 10px;
+            margin-left: 10px;
+            float: left;
+            line-height: 30px;
+            vertical-align: middle;
+            border: 4px solid #000;
+            display: inline-block;
+        }
+
+        /* 선택 메뉴 아이템 스타일 */
+        .bar-menu ul.menu-body li.select {
+            background-color: #ff0;
+        }
+
+        /* 오버 메뉴 아이템 스타일 */
+        .bar-menu ul.menu-body li.over {
+            background-color: #eee;
+        }
+
+        .bar-menu .bar {
+            width: 0;
+            height: 10px;
+            background-color: #f00;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bar-menu" id="barMenu1">
+        <ul class="menu-body">
+            <li>웹동네 홈</li>
+            <li>공개 스터디</li>
+            <li>온라인 동영상 강의</li>
+            <li>참여형 특강</li>
+            <li>정보공유 세미나</li>
+            <li>기업/단체강의</li>
+        </ul>
+        <div class="bar"> </div>
+    </div>
+    <script src="02_barmenu.js"></script>
+    <script>
+        window.onload = function () {
+            const barMenu = new BarMenu('barmenu1');
+            barMenu.setSelectMenuItemAt(2, false);
+        }
+    </script>
+</body>
+
+</html>

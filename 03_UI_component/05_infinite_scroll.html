@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .infinite{
+            background-color: #eee;
+        }
+        .list{
+            border: 1px solid #f00;
+            background-color: aquamarine;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+        인피니트 스크롤은 레이지로드와 유사한 점이 많고, 제작법도 유사하다.
+        - 전통적인 스크롤 감지(현재 이 방식으로 예제 진행)
+        - intersection Observer(이 부분 시간나면 공부해보자)
+    -->
+
+    <!-- list의 내용물이 바닥을 만났을 때 fetch나 xmlhttprequest나 ajax로 다음페이지의 내용을 불러와 만드는 것 -->
+    <div class="infinite">
+        <div class="list">
+            <h3>이미지</h3>
+            <img src="https://via.placeholder.com/400x600" class="img" alt="">
+        </div>
+        <div class="list">
+            <h3>이미지</h3>
+            <img src="https://via.placeholder.com/400x600" class="img" alt="">
+        </div>
+        <div class="list">
+            <h3>이미지</h3>
+            <img src="https://via.placeholder.com/400x600" class="img" alt="">
+        </div>
+    </div>
+    <div class="pagination">
+        <a href="1페이지주소" class="prevPage" id="">◀</a>
+        <span>2</span>
+        <a href="3페이지주소" class="nextPage" id="">▶</a>
+    </div>
+    <script type="text/javascript" src="05_infinite_scroll.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            const infiniteScroll = new Infinite('.infinite');
+        }
+    </script>
+</body>
+
+</html>

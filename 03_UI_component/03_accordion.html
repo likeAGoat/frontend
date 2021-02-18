@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .accordion-menu {
+            position: relative;
+            width: 300px;
+            list-style: none;
+        }
+
+        .accordion-menu>li {
+            overflow: hidden;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+
+        .accordion-menu li .main-title {
+            background-color: #fff;
+            padding: 10px;
+            vertical-align: middle;
+            position: relative;
+            z-index: 100;
+        }
+
+        .accordion-menu li .main-title a {
+            display: inline-block;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .accordion-menu li .main-title .folder {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            overflow: hidden;
+            line-height: 20px;
+            text-align: center;
+            vertical-align: middle;
+            margin-right: 5px;
+            text-indent: -100px;
+            background-image: url("./images/folder.png");
+            /* 기본은 .close */
+            background-position: 0px -40px;
+
+        }
+
+        .accordion-menu li .main-title .folder.empty {
+            background-position: 0 0;
+        }
+
+        .accordion-menu li .main-title .folder.open {
+            background-position: 0px -20px;
+        }
+
+        .accordion-menu li .main-title .folder.close {
+            background-position: 0px -40px;
+        }
+
+        .accordion-menu li ul.sub {
+            list-style: none;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            z-index: 90;
+            position: relative;
+        }
+
+        .accordion-menu li ul.sub.open {
+            display: block;
+        }
+
+        .accordion-menu li ul.sub.hide {
+            display: none;
+        }
+
+        .accordion-menu li ul.sub li {
+            height: 20px;
+            padding: 10px;
+            line-height: 20px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .accordion-menu li ul.sub li.select {
+            background-color: #ff0;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="accordion-menu" id="accordionMenu1">
+        <li>
+            <div class="main-title"><span class="folder"> </span><a>menu1</a></div>
+            <ul class="sub">
+                <li><a>sub1-1</a></li>
+                <li><a>sub1-2</a></li>
+                <li><a>sub1-3</a></li>
+                <li><a>sub1-4</a></li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="main-title"><span class="folder "> </span><a>menu2</a></div>
+            <ul class="sub">
+                <li><a>sub2-1</a></li>
+                <li><a>sub2-2</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="main-title"><span class="folder"> </span><a>menu3</a> </div>
+            <ul class="sub">
+                <li><a>sub3-1</a></li>
+                <li><a>sub3-2</a></li>
+                <li><a>sub3-3</a></li>
+                <li><a>sub3-4</a></li>
+                <li><a>sub3-5</a></li>
+                <li><a>sub3-6</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="main-title"><span class="folder empty"> </span><a>menu4</a></div>
+        </li>
+    </ul>
+    <script src="03_accordion.js"></script>
+    <script>
+        window.onload = function () {
+            const accordion = new FolderAccordionMenu(".accordion-menu");
+            // accordion.selectMenu(1,0);
+
+            //[D]이건 다시 수정하쟈 !!!
+            console.log(accordion.$accordionMenu);
+            accordion.$accordionMenu.addEventListener("open", function (e) {
+                consoel.log("되냠");
+                console.log("open", e.target.querySelector(".main-title a").textContent);
+            })
+        }
+    </script>
+</body>
+
+</html>
