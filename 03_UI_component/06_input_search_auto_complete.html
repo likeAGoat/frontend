@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            margin: 200px auto 0;
+            width: 300px;
+            background-color: rosybrown;
+        }
+        .wrapper input{
+            width: 240px;
+        }
+        .autocom-box{
+            opacity: 0;
+            display: none;
+        }
+        .active.autocom-box{
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 참고 : https://www.youtube.com/watch?v=QxMBHi_ZiT8 -->
+    <div class="wrapper">
+        <div class="search-input">
+            <input type="text" placeholder="Type to search..">
+            <button type="button">검색</button>
+        </div>
+        <ul class="autocom-box">
+            <li>123123</li>
+            <li>456456</li>
+            <li>789789</li>
+            <li>123123</li>
+        </ul>
+    </div>
+    <script src="./06_suggestion.js"></script>
+    <script src="./06_input_search_auto_complete.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .modal{
+            display: none;
+        }
+        .modal.open{
+            display: block;
+        }
+        .modal_content{
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .modal_content h1{
+            font-size: 18px;
+        }
+        .modal_content button{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .modal_overlay{
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+        }
+    </style>
+</head>
+<body>
+    <button id="modalBtn">Modal 버튼</button>
+    <div class="modal">
+        <div class="modal_overlay"></div>
+        <div class="modal_content">
+            <h1>Hi this is titlke</h1>
+            <p>
+                안뇽 이건 모달창이예요 ~~~ 모달모달모달 ~~~
+            </p>
+            <button>X</button>
+        </div>
+    </div>
+    <script>
+        const openButton = document.getElementById("modalBtn");
+        const modal = document.querySelector(".modal");
+        const overlay = modal.querySelector(".modal_overlay");
+        const closeBtn = modal.querySelector("button");
+
+        const openModal = () => {
+            modal.classList.add("open");
+        }
+
+        const closeModal = () => {
+            modal.classList.remove("open");
+        }
+
+        overlay.addEventListener("click",closeModal);
+        closeBtn.addEventListener("click",closeModal);
+        openButton.addEventListener("click",openModal);
+    </script>
+</body>
+</html>
